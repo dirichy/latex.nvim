@@ -1,10 +1,12 @@
 local util = require("latex.conditions.util")
 local M = {}
+
+---@return boolean
 function M.in_text()
 	local node = util.get_node_at_cursor()
 	while node do
 		if node:type() == "text_mode" then
-			-- For \text{}
+			-- For \text{} 
 			local parent = node:parent()
 			if parent and util.MATH_NODES[parent:type()] then
 				return false
@@ -28,6 +30,7 @@ function M.in_comment()
 	end
 	return false
 end
+
 function M.in_math()
 	local node = util.get_node_at_cursor()
 	while node do
@@ -40,13 +43,16 @@ function M.in_math()
 	end
 	return false
 end
+
 ---judge if the cursor is in some certain environment.
----when check_ancestor is false, will only check the nearest env_nodes.
----when check_ancestor is true, will check all ancestors.
----when in given env, well return a table contains fields env_name:string,args:string[],optional_arg:string
----@return table|false
----@param env_name string|string[]|table<string,boolean>
----@param check_ancestor boolean
+---
+---
+---
+---@return table|false 
+---@param env_name string|string[]|table<string,boolean> #**when in given env, it returns a table contains fields 
+---env_name:string,args:string[],optional_arg:string**
+---@param check_ancestor boolean #**when check_ancestor is false, the function will only check the nearest env_nodes.
+---when check_ancestor is true, the function will check all ancestors.**
 function M.in_env(env_name, check_ancestor)
 	if type(env_name) == "string" then
 		env_name = { env_name }
@@ -82,16 +88,16 @@ function M.in_env(env_name, check_ancestor)
 		node = node:parent()
 	end
 end
+
 --- judge if the cursor is in n-th arg of cmd.
---- cmd_name is the name of cmd without backslash, n is a number.
---- when n=nil, it will return the number k such that the cursor is in k-th arg if the cursor is in any arg of cmd.
---- --TODO:when n=0, it will return the number k such that the cursor is in k-th arg if the cursor is in optional arg of cmd.
---- check_ancestor means whether to check ancestor. For example, \cmd_name{\othercmd{aa|a}}
---- will return the number k such that the cursor is in k-th arg if check ancestor is the number k such that the cursor is in k-th arg, but return false when check ancestor is false
---- when cmd_name is a table, will check all cmd_name in the table. return the number k such that the cursor is in k-th arg if at least one of them is found
---- @param cmd_name string|string[]|table<string,boolean>
---- @param n number
---- @param check_ancestor boolean
+--- 
+--- 
+--- @param cmd_name string|string[]|table<string,boolean> #**the name of cmd without backslash. If cmd_name is a table, it will check all cmd_name in the table and 
+--- return the number k such that the cursor is in k-th arg if at least one of them is found**
+--- @param n number #**when n=nil, if the cursor is in any arg of cmd, it will return the number k such that the cursor is in k-th arg.**
+--- **--TODO:when n=0, it will return the number k such that the cursor is in k-th arg if the cursor is in optional arg of cmd.**
+--- @param check_ancestor boolean #**whether to check ancestor. For example, \cmd_name{\othercmd{aa|a}} will return the number k such that the cursor is in k-th arg 
+--- if check ancestor is the number k such that the cursor is in k-th arg, but return false when check ancestor is false.**
 --- @return boolean|number
 function M.in_cmd_arg(cmd_name, n, check_ancestor)
 	if type(cmd_name) == "string" then
@@ -167,5 +173,8 @@ function M.in_preamble()
 end
 function M.in_item()
 	return M.in_env({ "itemize", "enumerate" }, false)
+end
+function M.in_table()
+	return M.in_env({ "tblr", "cases", "matrix", }, false)
 end
 return M
