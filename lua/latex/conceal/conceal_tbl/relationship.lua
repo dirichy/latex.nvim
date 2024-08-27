@@ -23,6 +23,7 @@ return {
 	["\\ne"] = "≠", --re
 	["\\neq"] = "≠", --re
 	["\\ni"] = "∋", --re
+	["\\nmid"] = "∤",
 	["\\notin"] = "∉", --re
 	["\\owns"] = "∋", --re
 	["\\parallel"] = "║", --re

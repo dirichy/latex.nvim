@@ -25,4 +25,11 @@ M.get_magic_comment = function(key, ific)
 	end
 	return value
 end
+M.write_file = function(path, str)
+	local file = io.open(path, "w+")
+	if not file then
+		error("file not exists:" .. path)
+	end
+	file:write(str)
+end
 return M

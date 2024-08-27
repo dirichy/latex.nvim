@@ -26,19 +26,35 @@ M.CMD_NODES = {
 }
 --- get node under cursor
 --- @return TSNode|nil
-function M.get_node_at_cursor()
-	local pos = vim.api.nvim_win_get_cursor(0)
-	-- Subtract one to account for 1-based row indexing in nvim_win_get_cursor
-	local row, col = pos[1] - 1, pos[2]
-	local parser = vim.treesitter.get_parser(0, "latex")
-	if not parser then
-		return
+M.get_node_at_cursor = require("nvim-treesitter.ts_utils").get_node_at_cursor
+
+M.node_parent = function(node, bufer)
+	if not node then
+		return nil
 	end
-	local root_tree = parser:parse({ row, col, row, col })[1]
-	local root = root_tree and root_tree:root()
-	if not root then
-		return
+	if node:parent() then
+		return node:parent()
 	end
-	return root:named_descendant_for_range(row, col, row, col)
+	if vim.bo.filetype == "tex" or vim.bo.filetype == "latex" then
+		return nil
+	end
+	if node:start() == 0 then
+		return nil
+	end
+	return vim.treesitter.get_node(bufer)
 end
+-- 	local pos = vim.api.nvim_win_get_cursor(0)
+-- 	-- Subtract one to account for 1-based row indexing in nvim_win_get_cursor
+-- 	local row, col = pos[1] - 1, pos[2]
+-- 	local parser = vim.treesitter.get_parser(0, "latex")
+-- 	if not parser then
+-- 		return
+-- 	end
+-- 	local root_tree = parser:parse({ row, col, row, col })[1]
+-- 	local root = root_tree and root_tree:root()
+-- 	if not root then
+-- 		return
+-- 	end
+-- 	return root:named_descendant_for_range(row, col, row, col)
+-- end
 return M

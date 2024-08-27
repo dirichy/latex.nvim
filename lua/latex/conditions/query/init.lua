@@ -10,7 +10,7 @@ function M.in_text(Node, source, check_parent)
 		if node:type() == "text_mode" then
 			if check_parent then
 				-- For \text{}
-				parent = node:parent()
+				parent = util.node_parent(node)
 				if parent and util.MATH_NODES[parent:type()] then
 					return false
 				end
@@ -19,7 +19,7 @@ function M.in_text(Node, source, check_parent)
 		elseif util.MATH_NODES[node:type()] then
 			return false
 		end
-		parent = node:parent()
+		parent = util.node_parent(node)
 		if parent then
 			node = parent
 		else
@@ -38,7 +38,7 @@ function M.in_comment(Node, source)
 		if node:type() == "comment" then
 			return true
 		end
-		parent = node:parent()
+		parent = util.node_parent(node)
 		if parent then
 			node = parent
 		else
@@ -58,7 +58,7 @@ function M.in_math(Node, source)
 		elseif util.MATH_NODES[node:type()] then
 			return true
 		end
-		parent = node:parent()
+		parent = util.node_parent(node)
 		if parent then
 			node = parent
 		else
@@ -108,7 +108,7 @@ function M.in_env(Node, source, env_name, check_ancestor)
 				return false
 			end
 		end
-		parent = node:parent()
+		parent = util.node_parent(node)
 		if parent then
 			node = parent
 		else
@@ -140,16 +140,16 @@ function M.in_cmd_arg(Node, source, cmd_name, n, check_ancestor)
 	if not node then
 		return false
 	end
-	local cmd_node = node:parent()
+	local cmd_node = util.node_parent(node)
 	local command_name_node
 	if cmd_node:type() == "text" then
 		node = cmd_node
-		cmd_node = node:parent()
+		cmd_node = util.node_parent(node)
 	end
 	while cmd_node do
 		if not util.CMD_NODES[cmd_node:type()] then
 			node = cmd_node
-			cmd_node = node:parent()
+			cmd_node = util.node_parent(node)
 			goto continue
 		end
 		command_name_node = cmd_node:field("command")[1]
@@ -159,7 +159,7 @@ function M.in_cmd_arg(Node, source, cmd_name, n, check_ancestor)
 				return false
 			else
 				node = cmd_node
-				cmd_node = node:parent()
+				cmd_node = util.node_parent(node)
 				goto continue
 			end
 		else

@@ -24,6 +24,7 @@ M.cmd2char = {
 	["ln"] = [[\ln]],
 }
 M.cmd3char = {
+	["sps"] = [[\superset]],
 	["prf"] = [[\vdash]],
 	["ind"] = [[\ind]],
 	["pto"] = [[\overset{\mathbb{P}}{\to}]],

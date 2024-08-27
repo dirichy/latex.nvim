@@ -1,8 +1,8 @@
 local L = {}
 
-L.imaps = require("latex.module.imaps")
+-- L.imaps = require("latex.module.imaps")
 L.conceal = require("latex.conceal")
-L.surrounds = require("latex.module.surrounds")
+-- L.surrounds = require("latex.module.surrounds")
 
 L.__index = L
 
@@ -31,9 +31,9 @@ L._defaults = {
 			othersymbol = true,
 		},
 		conceal_tbl = {
-			mathfont = { ["\\mathbb{A}"] = false },
-			test = { ["\\test"] = "T" },
-			conditiontest = { { condition = require("latex.conditions.query").in_item }, ["\\item"] = "I" },
+			-- mathfont = { ["\\mathbb{A}"] = false },
+			-- test = { ["\\test"] = "T" },
+			-- conditiontest = { { condition = require("latex.conditions.query").in_item }, ["\\item"] = "I" },
 		},
 	},
 	imaps = {
@@ -50,6 +50,7 @@ L._defaults = {
 
 function L.setup(args)
 	args = vim.tbl_deep_extend("force", L._defaults, args == nil and {} or args)
+	L.args = args
 	L.conceal.init(args.conceal)
 	-- vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
 	-- 	pattern = { "*.tex" },

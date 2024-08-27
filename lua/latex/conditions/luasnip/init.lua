@@ -5,7 +5,7 @@ function M.in_text()
 	while node do
 		if node:type() == "text_mode" then
 			-- For \text{}
-			local parent = node:parent()
+			local parent = util.node_parent(node)
 			if parent and util.MATH_NODES[parent:type()] then
 				return false
 			end
@@ -13,7 +13,7 @@ function M.in_text()
 		elseif util.MATH_NODES[node:type()] then
 			return false
 		end
-		node = node:parent()
+		node = util.node_parent(node)
 	end
 	return true
 end
@@ -24,7 +24,7 @@ function M.in_comment()
 		if node:type() == "comment" then
 			return true
 		end
-		node = node:parent()
+		node = util.node_parent(node)
 	end
 	return false
 end
@@ -36,7 +36,7 @@ function M.in_math()
 		elseif util.MATH_NODES[node:type()] then
 			return true
 		end
-		node = node:parent()
+		node = util.node_parent(node)
 	end
 	return false
 end
@@ -79,7 +79,7 @@ function M.in_env(env_name, check_ancestor)
 				return false
 			end
 		end
-		node = node:parent()
+		node = util.node_parent(node)
 	end
 end
 --- judge if the cursor is in n-th arg of cmd.
@@ -105,17 +105,17 @@ function M.in_cmd_arg(cmd_name, n, check_ancestor)
 	if not node then
 		return false
 	end
-	local cmd_node = node:parent()
+	local cmd_node = util.node_parent(node)
 	local command_name_node
 	if cmd_node:type() == "text" then
 		node = cmd_node
-		cmd_node = node:parent()
+		cmd_node = util.node_parent(node)
 	end
 	local buf = vim.api.nvim_get_current_buf()
 	while cmd_node do
 		if not util.CMD_NODES[cmd_node:type()] then
 			node = cmd_node
-			cmd_node = node:parent()
+			cmd_node = util.node_parent(node)
 			goto continue
 		end
 		command_name_node = cmd_node:field("command")[1]
@@ -125,7 +125,7 @@ function M.in_cmd_arg(cmd_name, n, check_ancestor)
 				return false
 			else
 				node = cmd_node
-				cmd_node = node:parent()
+				cmd_node = util.node_parent(node)
 				goto continue
 			end
 		else
