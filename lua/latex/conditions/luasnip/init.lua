@@ -28,7 +28,7 @@ function M.in_comment()
 	end
 	return false
 end
-function M.in_math()
+function M._in_math()
 	local node = util.get_node_at_cursor()
 	while node do
 		if util.TEXT_NODES[node:type()] then
@@ -39,6 +39,9 @@ function M.in_math()
 		node = util.node_parent(node)
 	end
 	return false
+end
+function M.in_math()
+	return M._in_math() and not M.in_cmd_arg("tipa", 0, true)
 end
 ---judge if the cursor is in some certain environment.
 ---when check_ancestor is false, will only check the nearest env_nodes.
