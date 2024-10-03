@@ -156,6 +156,7 @@ local cmd3charwithcom = {
 	["(%a)tr"] = [[%1^{\mathsf{T}}]],
 }
 M.cmd4char = {
+	["norm"] = [[\norm{<>}]],
 	["pmat"] = [[pmat]], --for matrix.lua
 	["aseq"] = [[\overset{\text{a.s.}}{=}]],
 	["aeeq"] = [[\overset{\text{a.e.}}{=}]],

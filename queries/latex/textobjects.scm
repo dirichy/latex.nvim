@@ -4,19 +4,21 @@
  (text_mode)
  ] @command.outer
 
-(generic_command
-  (command_name) @command.inner)
+(generic_command (command_name) @command.inner)
 
+((math_environment) @math_environment.outer)
 
-((math_environment . (_) . (_) @_start (_)? @_end . (_) . ) @math_environment.outer
-                                                            (#make-range! "math_environment.inner" @_start @_end))
+((math_environment) @math_environment.inner (#offset! @math_environment.inner 1 0 -1 0))
 
-((math_environment  .(_) . (label_definition) . (_) @_start (_)? @_end . (_) . ) @math_environment.outer
-                                                                                 (#make-range! "math_environment.inner" @_start @_end))
-((inline_formula
-   . ["\\(" "$" ] . _ @_start _? @_end . [ "\\)" "$" ] . ) @math_environment.outer (#make-range! "math_environment.inner" @_start @_end))
-((displayed_equation
-   . ["\\[" "$$" ] . _ @_start _? @_end . [ "\\]" "$$" ] . ) @math_environment.outer (#make-range! "math_environment.inner" @_start @_end))
+((inline_formula) @math_environment.outer )
+
+((displayed_equation) @math_environment.outer )
+
+((inline_formula . "\\(" "\\)" . ) @math_environment.inner (#offset! @math_environment.inner 0 2 0 -2) )
+
+((inline_formula . "$" "$" . ) @math_environment.inner (#offset! @math_environment.inner 0 1 0 -1) )
+
+((displayed_equation . ["\\[" "$$" ] [ "\\]" "$$" ] . ) @math_environment.inner (#offset! @math_environment.inner 1 0 -1 0) )
 
 ((generic_environment . (_) . (_) @_start (_)? @_end . (_) .) @block.outer
                                                               (#make-range! "block.inner" @_start @_end))

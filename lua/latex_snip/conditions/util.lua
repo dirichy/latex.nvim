@@ -29,20 +29,23 @@ M.CMD_NODES = {
 M.get_node_at_cursor = require("nvim-treesitter.ts_utils").get_node_at_cursor
 
 M.node_parent = function(node, bufer)
-	if not node then
-		return nil
-	end
-	if node:parent() then
-		return node:parent()
-	end
-	if vim.bo.filetype == "tex" or vim.bo.filetype == "latex" then
-		return nil
-	end
-	if node:start() == 0 then
-		return nil
-	end
-	return vim.treesitter.get_node(bufer)
+	return node:parent()
 end
+-- M.node_parent = function(node, bufer)
+-- 	if not node then
+-- 		return nil
+-- 	end
+-- 	if node:parent() then
+-- 		return node:parent()
+-- 	end
+-- 	if vim.bo.filetype == "tex" or vim.bo.filetype == "latex" then
+-- 		return nil
+-- 	end
+-- 	if node:start() == 0 then
+-- 		return nil
+-- 	end
+-- 	return vim.treesitter.get_node(bufer)
+-- end
 -- 	local pos = vim.api.nvim_win_get_cursor(0)
 -- 	-- Subtract one to account for 1-based row indexing in nvim_win_get_cursor
 -- 	local row, col = pos[1] - 1, pos[2]
