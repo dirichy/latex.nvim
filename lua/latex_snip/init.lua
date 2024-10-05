@@ -1,7 +1,7 @@
 local L = {}
 
 -- L.imaps = require("latex_snip.module.imaps")
-L.conceal = require("latex_snip.conceal")
+-- L.conceal = require("latex_snip.conceal")
 -- L.surrounds = require("latex_snip.module.surrounds")
 
 L.__index = L
