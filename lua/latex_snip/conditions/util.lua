@@ -38,7 +38,7 @@ end
 -- 	if node:parent() then
 -- 		return node:parent()
 -- 	end
--- 	if vim.bo.filetype == "tex" or vim.bo.filetype == "latex" then
+-- 	if vim.bo.filetype == "tex" or vim.bo.filetype == "latex_snip" then
 -- 		return nil
 -- 	end
 -- 	if node:start() == 0 then
@@ -49,7 +49,7 @@ end
 -- 	local pos = vim.api.nvim_win_get_cursor(0)
 -- 	-- Subtract one to account for 1-based row indexing in nvim_win_get_cursor
 -- 	local row, col = pos[1] - 1, pos[2]
--- 	local parser = vim.treesitter.get_parser(0, "latex")
+-- 	local parser = vim.treesitter.get_parser(0, "latex_snip")
 -- 	if not parser then
 -- 		return
 -- 	end

@@ -1,4 +1,4 @@
-local util = require("latex.conditions.util")
+local util = require("latex_snip.conditions.util")
 local M = {}
 function M.in_text()
 	local node = util.get_node_at_cursor()

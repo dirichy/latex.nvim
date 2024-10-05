@@ -1,8 +1,8 @@
 local L = {}
 
--- L.imaps = require("latex.module.imaps")
-L.conceal = require("latex.conceal")
--- L.surrounds = require("latex.module.surrounds")
+-- L.imaps = require("latex_snip.module.imaps")
+L.conceal = require("latex_snip.conceal")
+-- L.surrounds = require("latex_snip.module.surrounds")
 
 L.__index = L
 
@@ -33,7 +33,7 @@ L._defaults = {
 		conceal_tbl = {
 			-- mathfont = { ["\\mathbb{A}"] = false },
 			-- test = { ["\\test"] = "T" },
-			-- conditiontest = { { condition = require("latex.conditions.query").in_item }, ["\\item"] = "I" },
+			-- conditiontest = { { condition = require("latex_snip.conditions.query").in_item }, ["\\item"] = "I" },
 		},
 	},
 	imaps = {
